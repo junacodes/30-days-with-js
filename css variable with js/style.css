@@ -1,0 +1,33 @@
+:root{
+    --base:#ffc600;
+    --spacing:20px;
+    --blur:1px;
+  }
+  img{
+    padding:var(--spacing);
+    filter:blur(var(--blur));
+    background: var(--base);
+  }
+  .h1{
+    color: var(--base)
+  }
+  /*
+    misc styles, nothing to do with CSS variables
+  */
+
+  body {
+    text-align: center;
+    background: #ece6e4;
+    color: rgb(202, 48, 48);
+    font-family:'Times New Roman', Times, serif;
+    font-weight: 100;
+    font-size: 50px;
+  }
+
+  .controls {
+    margin-bottom: 50px;
+  }
+
+  input {
+    width: 100px;
+  }
