@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html5 video player</title>
+    <link rel="stylesheet" href="./style.css">
+    <!-- <script src="./index.js"></script> -->
+</head>
+
+<body>
+    <div class="player">
+        <video class="player__video viewer"
+            src="https://player.vimeo.com/external/194837908.sd.mp4?s=c350076905b78c67f74d7ee39fdb4fef01d12420&profile_id=164"></video>
+
+        <div class="player__controls">
+            <div class="progress">
+                <div class="progress__filled"></div>
+            </div>
+            <button class="player__button toggle" title="Toggle Play">►</button>
+            <input type="range" name="volume" class="player__slider" min="0" max="1" step="0.05" value="1">
+            <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1">
+            <button data-skip="-10" class="player__button">« 10s</button>
+            <button data-skip="25" class="player__button">25s »</button>
+            <button class="player__button player__fullscreen">⧉</button>
+        </div>
+    </div>
+</body>
+<script>const vidWrapper = document.querySelector('div.player');
+    const myVid = vidWrapper.querySelector('video.player__video');
+
+    // controls
+    const controlPlay = vidWrapper.querySelector('.player__button');
+    const controlVol = vidWrapper.querySelector('.player__slider[name="volume"]');
+    const controlRate = vidWrapper.querySelector('.player__slider[name="playbackRate"]');
+    const controlSkip = vidWrapper.querySelectorAll('.player__button[data-skip]');
+    const controlFullScreen = vidWrapper.querySelector('.player__fullscreen');
+    const controlProgress = vidWrapper.querySelector('.progress');
+    const progressBar = vidWrapper.querySelector('.progress__filled');
+
+    // events
+    var drag;
+    var grap;
+
+    myVid.addEventListener('click', toggleVideo);
+    controlPlay.addEventListener('click', toggleVideo);
+    controlVol.addEventListener('change', updateVol);
+    controlRate.addEventListener('change', updateRate);
+    controlFullScreen.addEventListener('click', goFullScreen);
+    controlSkip.forEach(control => control.addEventListener('click', forward));
+    controlProgress.addEventListener('mouseover', function () { drag = true });
+    controlProgress.addEventListener('mouseout', function () { drag = false; grap = false });
+    controlProgress.addEventListener('mousedown', function () { grap = drag });
+    controlProgress.addEventListener('mouseup', function () { grap = false });
+    controlProgress.addEventListener('click', updateCurrentPos);
+    controlProgress.addEventListener('mousemove', function (e) { if (drag && grap) { updateCurrentPos(e) } });
+
+    var progression;
+
+    // functions
+    function toggleVideo() {
+        if (myVid.paused) {
+            myVid.play();
+            controlPlay.innerHTML = "❚ ❚";
+            updateProgress();
+            progression = window.setInterval(updateProgress, 200);
+        } else {
+            myVid.pause();
+            controlPlay.innerHTML = "►";
+            clearInterval(progression);
+        };
+    }
+    function updateVol() {
+        var volume = this.value;
+        myVid.volume = volume;
+    }
+    function updateRate() {
+        var rate = this.value;
+        myVid.playbackRate = rate;
+    }
+    function goFullScreen() {
+        console.dir(myVid);
+        if (myVid.webkitSupportsFullscreen) myVid.webkitEnterFullScreen();
+    }
+    function forward() {
+        var value = Number(this.dataset.skip);
+        myVid.currentTime = myVid.currentTime + value;
+    }
+    function updateProgress() {
+        var progress = myVid.currentTime / myVid.duration;
+        progressBar.style.flexBasis = Math.floor(progress * 1000) / 10 + '%';
+    }
+    function updateCurrentPos(e) {
+        // offset of the progress bar / video wrapper width
+        var newProgress = (e.clientX - vidWrapper.offsetLeft) / vidWrapper.clientWidth;
+        progressBar.style.flexBasis = Math.floor(newProgress * 1000) / 10 + '%';
+        myVid.currentTime = newProgress * myVid.duration;
+    }
+</script>
+
+</html>
