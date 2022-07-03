@@ -1,0 +1,45 @@
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background: #243444;
+}
+.chat{
+    max-width: 400px;
+    margin: 50px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 10px 10px 0 rgba(14, 13, 13, 0.1) ;
+}
+h3{
+    text-align: center;
+    padding: 9px 4px 0px 6px;
+}
+.item{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px  solid#adc533;
+}
+.item:last-child{
+    border-bottom: 0;
+    
+}
+input:checked + p {
+    background: #4555;
+    text-decoration: line-through;
+}
+input[type="checkbox"]{
+    margin: 20px;
+}
+p{
+    margin: 0;
+    padding: 20px;
+    transition: background 0.2s;
+    flex:1;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 200;
+    border-left: 1px solid #adc533; 
+}
+footer{
+    text-align: center;
+    color: #fff;
+}
