@@ -7,15 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="./style.css" />
-    <script src="./index.js"></script>
+    <!-- <script src="./index.js"></script> -->
 </head>
 
 <body>
     <h1>Key Sequence Detection</h1>
-<p>Key log: <br/>(press Backspace to remove last entry)</p>
-<div id = "log">[ ]</div>
-<p>You just pushed:</p>
-<div id = "keybox"></div>
+    <p>Key log: <br />(press Backspace to remove last entry)</p>
+    <div id="log">[ ]</div>
+    <p>You just pushed:</p>
+    <div id="keybox"></div>
 </body>
+<script>let array = [];
+    let keybox = document.querySelector('#keybox');
+    let log = document.querySelector('#log');
+
+    window.addEventListener('keyup', (e) => {
+        if (e.key == "Backspace") {
+            array = array.slice(0, array.length - 1);
+            log.innerHTML = '[' + array + ']';
+        }
+        else {
+            keybox.innerHTML = e.key;
+            array.push(e.key);
+            log.innerHTML = '[' + array + ']';
+            console.log(array);
+        }
+        if (array.toString() == ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a", "Enter"]) {
+            console.log('hello');
+            keybox.innerHTML = keybox.innerHTML = "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a", "Enter"
+
+        }
+    })</script>
 
 </html>
